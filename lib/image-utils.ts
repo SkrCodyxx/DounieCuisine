@@ -24,8 +24,10 @@ interface HasCoverImageId {
   coverImageId?: number | null;
 }
 
-export function getImageUrl(item: HasImageId | null | undefined): string | null {
-  if (!item?.imageId) return null;
+export function getImageUrl(item: HasImageId | number | null | undefined): string | null {
+  if (item === null || item === undefined) return null;
+  if (typeof item === "number") return item > 0 ? `/api/media/${item}` : null;
+  if (!item.imageId) return null;
   return `/api/media/${item.imageId}`;
 }
 
