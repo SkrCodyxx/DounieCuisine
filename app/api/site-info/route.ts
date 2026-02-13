@@ -3,15 +3,14 @@ import { db } from "@/lib/db";
 import * as schema from "@/lib/schema";
 
 export async function GET() {
+  if (!db) {
+    return NextResponse.json(null);
+  }
   try {
-    const [info] = await db
-      .select()
-      .from(schema.siteInfo)
-      .limit(1);
-
+    const [info] = await db.select().from(schema.siteInfo).limit(1);
     return NextResponse.json(info || null);
   } catch (error) {
     console.error("Error fetching site info:", error);
-    return NextResponse.json({ error: "Failed to fetch site info" }, { status: 500 });
+    return NextResponse.json(null);
   }
 }

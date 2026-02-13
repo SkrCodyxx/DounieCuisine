@@ -4,6 +4,7 @@ import { eq, and } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!db) return NextResponse.json({ error: "Database not connected" }, { status: 503 });
   try {
     const { id } = await params;
     const albumId = parseInt(id);

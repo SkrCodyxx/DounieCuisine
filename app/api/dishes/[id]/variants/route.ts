@@ -4,6 +4,7 @@ import { eq, and } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!db) return NextResponse.json([]);
   try {
     const { id } = await params;
     const dishId = parseInt(id);
@@ -17,6 +18,6 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
     return NextResponse.json(variants);
   } catch (error) {
     console.error("Error fetching variants:", error);
-    return NextResponse.json({ error: "Failed to fetch variants" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }

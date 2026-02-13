@@ -4,26 +4,29 @@ import { eq } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET() {
+  if (!db) return NextResponse.json([]);
   try {
     const testimonials = await db
       .select()
       .from(schema.testimonials)
       .where(eq(schema.testimonials.approved, 1))
       .orderBy(schema.testimonials.displayOrder);
-
     return NextResponse.json(testimonials);
   } catch (error) {
     console.error("Error fetching testimonials:", error);
-    return NextResponse.json({ error: "Failed to fetch testimonials" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!db) {
+    return NextResponse.json({ error: "Database not connected" }, { status: 503 });
+  }
   try {
     const body = await request.json();
     const validated = schema.insertTestimonialSchema.parse(body);
-
     const clientName = validated.clientName || validated.name;
+
     const [testimonial] = await db
       .insert(schema.testimonials)
       .values({
@@ -35,7 +38,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: "Testimonial submitted for review", testimonial },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating testimonial:", error);

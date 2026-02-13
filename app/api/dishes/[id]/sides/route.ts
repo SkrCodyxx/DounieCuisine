@@ -4,11 +4,11 @@ import { eq, and } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!db) return NextResponse.json([]);
   try {
     const { id } = await params;
     const dishId = parseInt(id);
 
-    // Get dish-side relations
     const dishSides = await db
       .select({
         dishSide: schema.dishSides,
@@ -28,6 +28,6 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
     return NextResponse.json(sides);
   } catch (error) {
     console.error("Error fetching sides:", error);
-    return NextResponse.json({ error: "Failed to fetch sides" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }

@@ -4,12 +4,12 @@ import { eq, and } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET(request: NextRequest) {
+  if (!db) return NextResponse.json([]);
   try {
     const { searchParams } = request.nextUrl;
     const isTakeout = searchParams.get("isTakeout");
     const isTakeoutBool = isTakeout === "1" || isTakeout === "true";
 
-    // Build conditions
     const conditions = [eq(schema.dishes.isActive, 1)];
     if (isTakeoutBool) {
       conditions.push(eq(schema.dishes.isTakeout, 1));
@@ -21,10 +21,8 @@ export async function GET(request: NextRequest) {
       .where(and(...conditions))
       .orderBy(schema.dishes.displayOrder);
 
-    // Fetch variants for all dishes
-    const dishIds = dishes.map((d) => d.id);
     const allVariants =
-      dishIds.length > 0
+      dishes.length > 0
         ? await db
             .select()
             .from(schema.dishVariantsNew)
@@ -32,7 +30,6 @@ export async function GET(request: NextRequest) {
             .orderBy(schema.dishVariantsNew.displayOrder)
         : [];
 
-    // Attach variants to their dishes
     const dishesWithVariants = dishes.map((dish) => ({
       ...dish,
       variants: allVariants.filter((v) => v.dishId === dish.id),
@@ -41,6 +38,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(dishesWithVariants);
   } catch (error) {
     console.error("Error fetching dishes:", error);
-    return NextResponse.json({ error: "Failed to fetch dishes" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }

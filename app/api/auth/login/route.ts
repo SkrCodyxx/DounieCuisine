@@ -6,6 +6,9 @@ import * as schema from "@/lib/schema";
 import { signToken, getAuthCookieOptions } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
+  if (!db) {
+    return NextResponse.json({ error: "Database not connected" }, { status: 503 });
+  }
   try {
     const { username, password } = await request.json();
 
@@ -28,7 +31,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    // Update last login
     await db
       .update(schema.adminUsers)
       .set({ lastLogin: new Date() })

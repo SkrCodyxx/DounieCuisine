@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!db) return NextResponse.json({ error: "Database not connected" }, { status: 503 });
   try {
     const { id } = await params;
     const mediaId = parseInt(id);
@@ -22,12 +23,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
       return NextResponse.json({ error: "Media not found" }, { status: 404 });
     }
 
-    // External URL redirect
     if (media.externalUrl) {
       return NextResponse.redirect(media.externalUrl);
     }
 
-    // Base64 encoded data
     if (media.data) {
       const base64Data = media.data.includes(",") ? media.data.split(",")[1] : media.data;
       const buffer = Buffer.from(base64Data, "base64");

@@ -4,6 +4,7 @@ import { eq, desc, sql } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET() {
+  if (!db) return NextResponse.json([]);
   try {
     const albums = await db
       .select({
@@ -32,6 +33,6 @@ export async function GET() {
     return NextResponse.json(albums);
   } catch (error) {
     console.error("Error fetching albums:", error);
-    return NextResponse.json({ error: "Failed to fetch albums" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }

@@ -4,16 +4,16 @@ import { eq } from "drizzle-orm";
 import * as schema from "@/lib/schema";
 
 export async function GET() {
+  if (!db) return NextResponse.json([]);
   try {
     const photos = await db
       .select()
       .from(schema.gallery)
       .where(eq(schema.gallery.active, 1))
       .orderBy(schema.gallery.displayOrder);
-
     return NextResponse.json(photos);
   } catch (error) {
     console.error("Error fetching gallery:", error);
-    return NextResponse.json({ error: "Failed to fetch gallery" }, { status: 500 });
+    return NextResponse.json([]);
   }
 }

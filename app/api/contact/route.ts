@@ -3,13 +3,15 @@ import { db } from "@/lib/db";
 import * as schema from "@/lib/schema";
 
 export async function POST(request: NextRequest) {
+  if (!db) {
+    return NextResponse.json({ error: "Database not connected" }, { status: 503 });
+  }
   try {
     const body = await request.json();
     const requestBody = {
       ...body,
       inquiryType: body.inquiryType || "general",
     };
-
     const validated = schema.insertContactMessageSchema.parse(requestBody);
 
     const [contactMessage] = await db
@@ -27,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: "Message sent successfully", contactMessage },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating contact message:", error);
