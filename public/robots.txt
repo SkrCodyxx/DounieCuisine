@@ -1,0 +1,91 @@
+# Dounie Cuisine - Robots.txt
+# Optimisé pour l'indexation Google et la sécurité
+
+User-agent: *
+
+# Pages principales à indexer en priorité
+Allow: /
+Allow: /catering
+Allow: /menu
+Allow: /takeout
+Allow: /daily-menu
+Allow: /events
+Allow: /gallery
+Allow: /contact
+Allow: /about
+
+# Pages publiques supplémentaires
+Allow: /api/site-info
+Allow: /api/gallery/
+Allow: /api/events/
+Allow: /api/menu/
+Allow: /api/testimonials/
+Allow: /api/dishes/
+
+# Ressources statiques autorisées
+Allow: /images/
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /manifest.json
+
+# Sécurité - Bloquer les zones admin et privées
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /api/admin/
+Disallow: /api/admin/*
+Disallow: /api/customer/
+Disallow: /api/customer/*
+Disallow: /api/auth/
+Disallow: /api/auth/*
+Disallow: /api/payments/
+Disallow: /api/payments/*
+Disallow: /checkout/
+Disallow: /customer/
+Disallow: /customer/*
+
+# Bloquer les endpoints sensibles
+Disallow: /api/upload/
+Disallow: /api/upload/*
+Disallow: /api/media/private/
+Disallow: /api/sse/
+Disallow: /api/sse/*
+
+# Bloquer les fichiers de configuration
+Disallow: /.env
+Disallow: /package.json
+Disallow: /tsconfig.json
+Disallow: /vite.config.ts
+Disallow: /drizzle.config.ts
+Disallow: /node_modules/
+Disallow: /dist/server/
+Disallow: /logs/
+Disallow: /migrations/
+Disallow: /scripts/
+Disallow: /backup/
+Disallow: /ssl/
+
+# Bloquer les endpoints de développement
+Disallow: /api/test-
+Disallow: /api/debug-
+Disallow: /dev/
+Disallow: /debug/
+Disallow: /__tests__/
+
+# Bloquer les fichiers temporaires et cache
+Disallow: /tmp/
+Disallow: /.cache/
+Disallow: /.git/
+Disallow: /*.log
+
+# Optimisation du crawl - délai entre les requêtes
+Crawl-delay: 1
+
+# Sitemap pour faciliter l'indexation
+Sitemap: https://douniecuisine.com/sitemap.xml
+
+# Instructions spécifiques pour Googlebot
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /api/site-info
+Allow: /api/gallery/public
+Allow: /api/events/public

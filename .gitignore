@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+dist/
+.env
+
+# Logs
+logs/*.log
+*.log
+
+# Debug
+nohup.out
+debug.log
+
+# Temporary files
+*.tmp
+*.temp
+cookies.txt
+
+# IDE
+.vscode/
+.idea/
+
+# Cache
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db

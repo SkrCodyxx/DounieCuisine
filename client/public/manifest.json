@@ -1,0 +1,82 @@
+{
+  "name": "Dounie Cuisine - Restaurant & Traiteur",
+  "short_name": "Dounie Cuisine",
+  "description": "Cuisine authentique et traiteur professionnel. Commandez en ligne vos plats préférés et services de traiteur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#c64110",
+  "orientation": "portrait-primary",
+  "categories": ["food", "shopping", "business"],
+  "lang": "fr-FR",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Menu Emporter",
+      "short_name": "Menu",
+      "description": "Voir le menu à emporter",
+      "url": "/takeout-menu",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Traiteur",
+      "short_name": "Traiteur",
+      "description": "Services de traiteur",
+      "url": "/catering",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Nous contacter",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "protocol_handlers": [
+    {
+      "protocol": "web+douniecuisine",
+      "url": "/%s"
+    }
+  ]
+}
